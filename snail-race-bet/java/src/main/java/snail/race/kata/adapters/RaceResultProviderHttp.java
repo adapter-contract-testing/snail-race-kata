@@ -9,19 +9,26 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+
 public class RaceResultProviderHttp implements RaceResultProvider {
     @Override
     public SnailRaces races() {
-        return null;
+        RaceResultProviderHttpRecords.RaceData raceData = invokeResultEndPoint();
+        return RaceResultProviderHttpAnticorruptionLayer.mapToDomain(raceData);
     }
 
-    static RaceResultProviderHttpRecords.RaceData invokeResultEndPoint() throws IOException, InterruptedException {
-        var httpClient = HttpClient.newHttpClient();
-        var request = HttpRequest.newBuilder(URI.create("http://localhost:8000/results/")).build();
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+    static RaceResultProviderHttpRecords.RaceData invokeResultEndPoint() {
+        try {
+            var httpClient = HttpClient.newHttpClient();
+            var request = HttpRequest.newBuilder(URI.create("http://localhost:8000/results/")).build();
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        RaceResultProviderHttpRecords.RaceData raceData = new ObjectMapper().readValue(response.body(), RaceResultProviderHttpRecords.RaceData.class);
-        return raceData;
+            return new ObjectMapper().readValue(response.body(), RaceResultProviderHttpRecords.RaceData.class);
+
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }
