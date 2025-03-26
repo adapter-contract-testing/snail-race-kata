@@ -1,5 +1,6 @@
 package snail.race.kata.adapters;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import snail.race.kata.domain.RaceResultProvider;
 
@@ -8,16 +9,11 @@ import java.io.IOException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class RaceResultProviderHttpTest {
+public class RaceResultProviderHttpTest extends RaceResultProviderContract {
 
-    @Test
-    void provide_race_results() {
-        RaceResultProviderHttp raceResultProviderHttp = new RaceResultProviderHttp();
-
-        RaceResultProvider.SnailRaces races = raceResultProviderHttp.races();
-
-        assertThat(races).isNotNull();
-        assertThat(races.races()).isNotEmpty();
+    @Override
+    protected RaceResultProvider getRaceResultProvider() {
+        return new RaceResultProviderHttp();
     }
 
 
