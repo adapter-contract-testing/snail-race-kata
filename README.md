@@ -15,4 +15,8 @@ Available lanquage:
  - [typescript](./snail-race-bet/typescript/README.md)
  - [java](./snail-race-bet/java/README.md)
 
+# See also
+ - [Organisation link](https://github.com/adapter-contract-testing/)
+ - [Slides](https://github.com/adapter-contract-testing/presentation)
+ - [Papers](https://github.com/adapter-contract-testing/adapter-contract-testing-papers)
 
