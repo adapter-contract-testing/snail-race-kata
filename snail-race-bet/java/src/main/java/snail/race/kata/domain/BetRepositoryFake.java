@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BetRepositoryFake implements BetRepository {
-    private List<Bet> bets = new ArrayList<>();
+    private final List<Bet> bets = new ArrayList<>();
 
     @Override
     public void register(Bet bet) {
@@ -13,7 +13,13 @@ public class BetRepositoryFake implements BetRepository {
 
     @Override
     public List<Bet> findByDateRange(long from, long to) {
-        return bets.stream().filter(bet -> bet.timestamp() >= from && bet.timestamp() < to)
+        return bets.stream()
+                .filter(bet -> bet.timestamp() >= from && bet.timestamp() < to)
+                .map(bet -> new Bet(
+                        bet.gambler(),
+                        new PodiumPronostic(bet.pronostic().first(), bet.pronostic().second(), bet.pronostic().third()),
+                        bet.timestamp()
+                ))
                 .toList();
     }
 }

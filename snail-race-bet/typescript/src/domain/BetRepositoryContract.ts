@@ -17,12 +17,6 @@ export function betRepositoryContract(getRepository: () => BetRepository) {
         ]);
     });
 
-    async function registerBetAtTimeStamp(timestamp: number) {
-        const bet = new BetBuilder().withTimeStamp(timestamp).build();
-        await getRepository().register(bet);
-        return bet;
-    }
-
     test('retrieve only bets inside the time range', async () => {
         const from = 12346;
         const to = 12370;
@@ -41,4 +35,21 @@ export function betRepositoryContract(getRepository: () => BetRepository) {
             betBeforeTo
         ]);
     })
+
+    test('the registered bet is not the same instance as the one retrieved)', async () => {
+        const bet = new Bet(
+            'Mathieu',
+            new PodiumPronostic(20, 12, 4),
+            12345);
+        await getRepository().register(bet);
+
+        const bets = await getRepository().findByDateRange(12345, 12346);
+        expect(bets[0]).not.toBe(bet);
+    })
+
+    async function registerBetAtTimeStamp(timestamp: number) {
+        const bet = new BetBuilder().withTimeStamp(timestamp).build();
+        await getRepository().register(bet);
+        return bet;
+    }
 }
