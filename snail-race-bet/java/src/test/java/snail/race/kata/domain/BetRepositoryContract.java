@@ -47,6 +47,14 @@ public abstract class BetRepositoryContract {
         ));
     }
 
+    @Test
+    void the_registered_bet_is_not_the_same_instance_as_the_one_retrieved(){
+        var bet = new BetBuilder().withTimeStamp(123).build();
+        this.getRepository().register(bet);
+        List<Bet> bets = this.getRepository().findByDateRange(0, 456);
+        assertThat(bets.get(0)).isNotSameAs(bet);
+    }
+
     private Bet registerBetAtTimestamp(int timestamp) {
         Bet bet = new BetBuilder().withTimeStamp(timestamp).build();
         this.getRepository().register(bet);

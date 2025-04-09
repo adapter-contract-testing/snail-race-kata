@@ -29,4 +29,14 @@ export function betRepositoryContract(repoProvider: () => BetRepository) {
         expect(bets).toEqual([betOnFrom, betAfterFrom, betBeforeEnd])
     })
 
+    test('the registered bet is not the same instance as the one retrieved', async () => {
+        const repository = repoProvider();
+        const bet = new Bet("me", new PodiumPronostic(2, 4, 6), 123);
+        await repository.register(bet);
+
+        const result = await repository.findByDateRange(0, 456);
+
+        expect(result[0]).not.toBe(bet);
+    })
+
 }
