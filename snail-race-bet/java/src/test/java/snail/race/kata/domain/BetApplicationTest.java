@@ -14,11 +14,11 @@ class BetApplicationTest {
             new RaceResultProvider.Snail(7, "Speedy")
     );
     BetApplication betApplication;
-    RaceResultProviderFake raceResultProvider = new RaceResultProviderFake();
+    RaceResultProviderSimulator raceResultProvider = new RaceResultProviderSimulator();
 
     @BeforeEach
     void setUp() {
-        betApplication = new BetApplication(new BetRepositoryFake(), raceResultProvider);
+        betApplication = new BetApplication(new BetRepositorySimulator(), raceResultProvider);
     }
 
     @Test

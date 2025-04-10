@@ -1,6 +1,6 @@
 import {Bet, BetRepository, PodiumPronostic} from "./BetRepository";
 
-export class BetRepositoryFake implements BetRepository {
+export class BetRepositorySimulator implements BetRepository {
     private bets: Bet[] = [];
 
     async findByDateRange(from: number, to: number): Promise<Array<Bet>> {

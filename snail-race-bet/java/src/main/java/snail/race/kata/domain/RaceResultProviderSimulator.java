@@ -3,14 +3,14 @@ package snail.race.kata.domain;
 
 import java.util.ArrayList;
 
-public class RaceResultProviderFake implements RaceResultProvider {
+public class RaceResultProviderSimulator implements RaceResultProvider {
     private SnailRaces snailRaces;
 
-    public RaceResultProviderFake() {
+    public RaceResultProviderSimulator() {
         this.snailRaces = new SnailRaces(new ArrayList<>());
     }
 
-    public RaceResultProviderFake(SnailRaces snailRaces) {
+    public RaceResultProviderSimulator(SnailRaces snailRaces) {
         this.snailRaces = snailRaces;
     }
 

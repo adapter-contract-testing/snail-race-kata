@@ -1,15 +1,15 @@
 import {BetApplication} from "./BetApplication";
-import {RaceResultProviderFake} from "./RaceResultProviderFake";
-import {BetRepositoryFake} from "./BetRepositoryFake";
+import {RaceResultProviderSimulator} from "./RaceResultProviderSimulator";
+import {BetRepositorySimulator} from "./BetRepositorySimulator";
 import {Podium} from "./RaceResultProvider";
 
 export class TestableApplication {
     private readonly app: BetApplication;
-    private readonly fakeRaceResultProvider: RaceResultProviderFake;
+    private readonly raceResultProviderSimulator: RaceResultProviderSimulator;
 
     constructor() {
-        this.fakeRaceResultProvider = new RaceResultProviderFake();
-        this.app = new BetApplication(new BetRepositoryFake(), this.fakeRaceResultProvider);
+        this.raceResultProviderSimulator = new RaceResultProviderSimulator();
+        this.app = new BetApplication(new BetRepositorySimulator(), this.raceResultProviderSimulator);
     }
 
     async getWinnersForLastRace() {
@@ -21,6 +21,6 @@ export class TestableApplication {
     }
 
     simulateRaceResult(date: number, podium: Podium) {
-        this.fakeRaceResultProvider.simulateRaceResult(594,date, podium)
+        this.raceResultProviderSimulator.simulateRaceResult(594,date, podium)
     }
 }
