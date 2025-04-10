@@ -1,15 +1,15 @@
-import {RaceResultProviderFake} from "./RaceResultProviderFake";
-import {BetRepositoryFake} from "./BetRepositoryFake";
+import {RaceResultProviderSimulator} from "./RaceResultProviderSimulator";
+import {BetRepositorySimulator} from "./BetRepositorySimulator";
 import {BetApplication} from "./BetApplication";
 import {Winners} from "./Winners";
 
 describe('BetApplication has', () => {
-    let raceResultProvider: RaceResultProviderFake;
+    let raceResultProvider: RaceResultProviderSimulator;
     let app: BetApplication;
 
     beforeEach(() => {
-        raceResultProvider = new RaceResultProviderFake()
-        app = new BetApplication(new BetRepositoryFake(), raceResultProvider);
+        raceResultProvider = new RaceResultProviderSimulator()
+        app = new BetApplication(new BetRepositorySimulator(), raceResultProvider);
 
     });
 

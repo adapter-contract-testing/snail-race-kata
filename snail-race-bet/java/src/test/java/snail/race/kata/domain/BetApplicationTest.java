@@ -10,13 +10,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class BetApplicationTest {
 
     BetApplication betApplication;
-    RaceResultProviderFake raceResultProvider = new RaceResultProviderFake();
+    RaceResultProviderSimulator raceResultProvider = new RaceResultProviderSimulator();
 
     @BeforeEach
     void setUp() {
 
         betApplication = new BetApplication(
-                new BetRepositoryFake(), // You don't need to interact with the repository to test the entire domain !
+                new BetRepositorySimulator(), // You don't need to interact with the repository to test the entire domain !
                 raceResultProvider);
     }
 
