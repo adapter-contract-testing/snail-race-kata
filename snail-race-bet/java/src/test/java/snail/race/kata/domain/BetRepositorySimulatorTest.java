@@ -2,13 +2,13 @@ package snail.race.kata.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 
-public class BetRepositoryFakeTest extends BetRepositoryContract {
+public class BetRepositorySimulatorTest extends BetRepositoryContract {
 
-    private BetRepositoryFake repository;
+    private BetRepositorySimulator repository;
 
     @BeforeEach
     void setup(){
-        repository = new BetRepositoryFake();
+        repository = new BetRepositorySimulator();
     }
     @Override
     protected BetRepository getRepository() {

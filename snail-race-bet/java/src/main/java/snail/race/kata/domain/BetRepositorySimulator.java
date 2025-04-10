@@ -3,7 +3,7 @@ package snail.race.kata.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BetRepositoryFake implements BetRepository {
+public class BetRepositorySimulator implements BetRepository {
     private final List<Bet> bets = new ArrayList<>();
 
     @Override

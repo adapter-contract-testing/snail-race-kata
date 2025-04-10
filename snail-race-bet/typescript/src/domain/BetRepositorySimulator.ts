@@ -1,6 +1,6 @@
 import {Bet, BetRepository, PodiumPronostic} from "./BetRepository";
 
-export class BetRepositoryFake implements BetRepository {
+export class BetRepositorySimulator implements BetRepository {
     private bets = new Array<Bet>()
     async register(bet: Bet): Promise<void> {
         this.bets.push(bet);
