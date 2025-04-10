@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BetRepositorySimulator implements BetRepository {
-    private final List<Bet> bets = new ArrayList<>();
+    private List<Bet> bets = new ArrayList<>();
 
     @Override
     public void register(Bet bet) {
