@@ -23,3 +23,12 @@ Verify the race server status
 ```shell
 curl localhost:8000/results
 ```
+3. Install dependencies
+```shell
+pip install -r requirements.txt
+```
+
+4. Check that requirements by run the following command
+```shell    
+pytest test/test_requirements_check.py
+```
