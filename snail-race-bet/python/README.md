@@ -23,12 +23,19 @@ Verify the race server status
 ```shell
 curl localhost:8000/results
 ```
-3. Install dependencies
+
+3. Install python virtual environnement
+```shell
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+4. Install dependencies
 ```shell
 pip install -r requirements.txt
 ```
 
-4. Check that requirements by run the following command
+5. Check that requirements by run the following command
 ```shell    
 pytest test/test_requirements_check.py
 ```
