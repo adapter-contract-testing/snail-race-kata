@@ -12,12 +12,15 @@ class BetRepositoryMongoDb:
         self.database = database
 
     def register(self, bet: Bet) -> None:
-        collection: Collection = self.database.get_collection("bet")
+        collection: Collection = self.get_collection()
         collection.insert_one({ "gambler": bet.gambler,
                                 "pronostic": { "first" : bet.pronostic.first,
                                             "second": bet.pronostic.second,
                                             "third": bet.pronostic.third },
                                 "timestamp": bet.timestamp })
+
+    def get_collection(self):
+        return self.database.get_collection("bet")
 
     def find_by_date_range(self, from_timestamp: int, to_timestamp: int) -> List['Bet']:
         query = {
@@ -26,11 +29,11 @@ class BetRepositoryMongoDb:
                 {"timestamp": {"$lt": to_timestamp}}
             ]
         }
-        collection: Collection = self.database.get_collection("bet")
+        collection: Collection = self.get_collection()
         results = collection.find(query)
-        return list(map(create_bet, results))
+        return list(map(map_document_to_bet, results))
 
-def create_bet(document) -> Bet :
+def map_document_to_bet(document) -> Bet :
     return Bet(
         document['gambler'],
         PodiumPronostic(
