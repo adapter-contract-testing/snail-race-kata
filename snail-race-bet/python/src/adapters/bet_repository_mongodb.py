@@ -29,16 +29,6 @@ class BetRepositoryMongoDb:
         collection: Collection = self.database.get_collection("bet")
         results = collection.find(query)
         return list(map(create_bet, results))
-        # return [
-        #     Bet(result.get("gambler"),
-        #         PodiumPronostic(
-        #             results.get("podium").get("first"),
-        #             results.get("podium").get("second"),
-        #             results.get("podium").get("third")
-        #         ),
-        #         result.get("timestamp"))
-        #     for result in results
-        # ]
 
 def create_bet(document) -> Bet :
     return Bet(
