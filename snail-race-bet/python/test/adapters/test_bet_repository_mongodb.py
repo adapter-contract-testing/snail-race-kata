@@ -11,7 +11,7 @@ class TestBetRepositoryMongoDb(BetRepositoryContract):
     def setup_and_teardown(self):
         self.client = MongoClient("mongodb://localhost:27017")
         self.database = self.client["test_snail_race"]
-        self.collection = self.database["bet"]
+        self.collection = self.database["bets"]
         self.collection.delete_many({})  # Nettoyage avant chaque test
         yield
         self.collection.delete_many({})  # Nettoyage après chaque test
