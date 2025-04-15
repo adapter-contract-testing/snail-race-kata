@@ -14,7 +14,6 @@ class TestBetRepositoryMongoDb(BetRepositoryContract):
         self.collection = self.database["bets"]
         self.collection.delete_many({})  # Nettoyage avant chaque test
         yield
-        self.collection.delete_many({})  # Nettoyage après chaque test
         self.client.close()
 
     def get_repository(self):
