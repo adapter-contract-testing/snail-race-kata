@@ -24,12 +24,12 @@ class BetRepositoryContract(ABC):
         from_timestamp = 12346
         to_timestamp = 12370
 
-        bet_before_from = self.register_bet_at_timestamp(repository, from_timestamp - 1)
+        _bet_before_from = self.register_bet_at_timestamp(repository, from_timestamp - 1)
         bet_on_from = self.register_bet_at_timestamp(repository, from_timestamp)
         bet_after_from = self.register_bet_at_timestamp(repository, from_timestamp + 1)
         bet_before_to = self.register_bet_at_timestamp(repository, to_timestamp - 1)
-        bet_on_to = self.register_bet_at_timestamp(repository, to_timestamp)
-        bet_after_to = self.register_bet_at_timestamp(repository, to_timestamp + 1)
+        _bet_on_to = self.register_bet_at_timestamp(repository, to_timestamp)
+        _bet_after_to = self.register_bet_at_timestamp(repository, to_timestamp + 1)
 
         bets = repository.find_by_date_range(from_timestamp, to_timestamp)
 
