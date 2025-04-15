@@ -13,11 +13,9 @@ class BetRepositoryMongoDb:
 
     def register(self, bet: Bet) -> None:
         collection: Collection = self.get_collection()
-        collection.insert_one({ "gambler": bet.gambler,
-                                "pronostic": { "first" : bet.pronostic.first,
-                                            "second": bet.pronostic.second,
-                                            "third": bet.pronostic.third },
-                                "timestamp": bet.timestamp })
+        collection.insert_one(convert_bet_to_document(bet))
+
+
 
     def get_collection(self):
         return self.database.get_collection("bet")
@@ -31,9 +29,9 @@ class BetRepositoryMongoDb:
         }
         collection: Collection = self.get_collection()
         results = collection.find(query)
-        return list(map(map_document_to_bet, results))
+        return list(map(convert_document_to_bet, results))
 
-def map_document_to_bet(document) -> Bet :
+def convert_document_to_bet(document) -> Bet :
     return Bet(
         document['gambler'],
         PodiumPronostic(
@@ -43,3 +41,10 @@ def map_document_to_bet(document) -> Bet :
         ),
         document['timestamp']
     )
+
+def convert_bet_to_document(bet):
+    return {"gambler": bet.gambler,
+            "pronostic": {"first": bet.pronostic.first,
+                          "second": bet.pronostic.second,
+                          "third": bet.pronostic.third},
+            "timestamp": bet.timestamp}
