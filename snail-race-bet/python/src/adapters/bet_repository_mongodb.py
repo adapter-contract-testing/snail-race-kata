@@ -1,10 +1,10 @@
+from typing import List
+
 from pymongo import MongoClient
 from pymongo.collection import Collection
-from typing import List
 
 from src.domain.bet import Bet
 from src.domain.podium_pronostic import PodiumPronostic
-from src.domain.race_result_provider import Podium
 
 
 class BetRepositoryMongoDb:
