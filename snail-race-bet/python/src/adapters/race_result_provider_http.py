@@ -1,13 +1,19 @@
-from dataclasses import dataclass
-from typing import List, Optional
 import requests
 
+from src.adapters.race_result_provider_http_anti_corruption_layer import RaceResultProviderHttpAntiCorruptionLayer
 from src.adapters.race_result_provider_http_internal_api import RaceResultProviderHttpInternalApi
+from src.domain.race_result_provider import SnailRaces, RaceResultProvider
 
 
-class RaceResultProviderHttp:
+class RaceResultProviderHttp(RaceResultProvider):
+
     def __init__(self, base_url: str = "http://localhost:8000"):
         self.base_url = base_url
+
+    def races(self) -> SnailRaces:
+        api_result = self.invoke_result_end_point()
+        return RaceResultProviderHttpAntiCorruptionLayer.map_to_domain(api_result)
+        pass
 
     def invoke_result_end_point(self) -> RaceResultProviderHttpInternalApi.RacesResponse:
         """Récupère les résultats de courses depuis l'API REST."""
