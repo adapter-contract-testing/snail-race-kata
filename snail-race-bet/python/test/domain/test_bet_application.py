@@ -1,10 +1,10 @@
 import pytest
 
-from src.domain.bet_application import BetApplication
-from src.domain.bet_repository_simulator import BetRepositorySimulator
-from src.domain.race_result_provider import Podium, Snail
-from src.domain.race_result_provider_simulator import RaceResultProviderSimulator
-from src.domain.winner import Winner
+from snail_race_kata.domain.bet_application import BetApplication
+from snail_race_kata.domain.bet_repository_simulator import BetRepositorySimulator
+from snail_race_kata.domain.race_result_provider import Podium, Snail
+from snail_race_kata.domain.race_result_provider_simulator import RaceResultProviderSimulator
+from snail_race_kata.domain.winner import Winner
 
 NINE_EIGHT_SEVEN_PODIUM = Podium(
     Snail(9, "Turbo"), Snail(8, "Flash"), Snail(7, "Speedy")

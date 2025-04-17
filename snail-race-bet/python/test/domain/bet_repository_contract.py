@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from copy import deepcopy
 
-from src.domain.bet import Bet
-from src.domain.podium_pronostic import PodiumPronostic
+from snail_race_kata.domain.bet import Bet
+from snail_race_kata.domain.podium_pronostic import PodiumPronostic
 
 
 class BetRepositoryContract(ABC):

@@ -1,7 +1,7 @@
 import pytest
 from pymongo import MongoClient
 
-from src.adapters.bet_repository_mongodb import BetRepositoryMongoDb
+from snail_race_kata.adapters.bet_repository_mongodb import BetRepositoryMongoDb
 from test.domain.bet_repository_contract import BetRepositoryContract
 
 

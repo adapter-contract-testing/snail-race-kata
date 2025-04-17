@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from src.domain.race_result_provider import SnailRaces
+from snail_race_kata.domain.race_result_provider import SnailRaces
 
 
 class RaceResultProviderContract(ABC):

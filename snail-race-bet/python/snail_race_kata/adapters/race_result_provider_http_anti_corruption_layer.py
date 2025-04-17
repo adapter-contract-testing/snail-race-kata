@@ -1,7 +1,7 @@
-from src.adapters.race_result_provider_http_internal_api import (
+from snail_race_kata.adapters.race_result_provider_http_internal_api import (
     RaceResultProviderHttpInternalApi,
 )
-from src.domain.race_result_provider import SnailRaces, Snail, Podium
+from snail_race_kata.domain.race_result_provider import SnailRaces, Snail, Podium
 
 
 class RaceResultProviderHttpAntiCorruptionLayer:

@@ -1,4 +1,4 @@
-from src.domain.race_result_provider import SnailRaces, Podium
+from snail_race_kata.domain.race_result_provider import SnailRaces, Podium
 
 
 class RaceResultProviderSimulator:

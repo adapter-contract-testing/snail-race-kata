@@ -1,7 +1,7 @@
 from copy import deepcopy
 from typing import List
 
-from src.domain.bet import Bet
+from snail_race_kata.domain.bet import Bet
 
 
 class BetRepositorySimulator:

@@ -3,8 +3,8 @@ from typing import List
 from pymongo import MongoClient
 from pymongo.collection import Collection
 
-from src.domain.bet import Bet
-from src.domain.podium_pronostic import PodiumPronostic
+from snail_race_kata.domain.bet import Bet
+from snail_race_kata.domain.podium_pronostic import PodiumPronostic
 
 
 class BetRepositoryMongoDb:

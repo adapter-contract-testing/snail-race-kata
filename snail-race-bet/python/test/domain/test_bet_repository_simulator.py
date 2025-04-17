@@ -1,4 +1,4 @@
-from src.domain.bet_repository_simulator import BetRepositorySimulator
+from snail_race_kata.domain.bet_repository_simulator import BetRepositorySimulator
 from test.domain.bet_repository_contract import BetRepositoryContract
 
 

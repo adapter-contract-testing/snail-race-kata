@@ -1,5 +1,5 @@
-from src.adapters.race_result_provider_http import RaceResultProviderHttp
-from src.adapters.race_result_provider_http_internal_api import (
+from snail_race_kata.adapters.race_result_provider_http import RaceResultProviderHttp
+from snail_race_kata.adapters.race_result_provider_http_internal_api import (
     RaceResultProviderHttpInternalApi,
 )
 from test.domain.race_result_provider_contract import RaceResultProviderContract

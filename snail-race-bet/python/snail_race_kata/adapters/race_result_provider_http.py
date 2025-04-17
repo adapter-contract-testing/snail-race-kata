@@ -1,12 +1,12 @@
 import requests
 
-from src.adapters.race_result_provider_http_anti_corruption_layer import (
+from snail_race_kata.adapters.race_result_provider_http_anti_corruption_layer import (
     RaceResultProviderHttpAntiCorruptionLayer,
 )
-from src.adapters.race_result_provider_http_internal_api import (
+from snail_race_kata.adapters.race_result_provider_http_internal_api import (
     RaceResultProviderHttpInternalApi,
 )
-from src.domain.race_result_provider import SnailRaces, RaceResultProvider
+from snail_race_kata.domain.race_result_provider import SnailRaces, RaceResultProvider
 
 
 class RaceResultProviderHttp(RaceResultProvider):

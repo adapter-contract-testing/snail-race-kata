@@ -1,9 +1,9 @@
 from typing import List
 
-from src.domain.bet import Bet
-from src.domain.podium_pronostic import PodiumPronostic
-from src.domain.race_result_provider import SnailRace
-from src.domain.winner import Winner
+from snail_race_kata.domain.bet import Bet
+from snail_race_kata.domain.podium_pronostic import PodiumPronostic
+from snail_race_kata.domain.race_result_provider import SnailRace
+from snail_race_kata.domain.winner import Winner
 
 
 class BetApplication:

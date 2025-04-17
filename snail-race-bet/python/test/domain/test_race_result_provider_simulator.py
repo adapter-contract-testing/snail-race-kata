@@ -1,5 +1,5 @@
-from src.domain.race_result_provider import Podium, Snail
-from src.domain.race_result_provider_simulator import RaceResultProviderSimulator
+from snail_race_kata.domain.race_result_provider import Podium, Snail
+from snail_race_kata.domain.race_result_provider_simulator import RaceResultProviderSimulator
 from test.domain.race_result_provider_contract import RaceResultProviderContract
 
 

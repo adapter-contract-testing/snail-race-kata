@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import List
-from src.domain.bet import Bet
+from snail_race_kata.domain.bet import Bet
 
 
 class BetRepository(ABC):

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from src.domain.podium_pronostic import PodiumPronostic
+from snail_race_kata.domain.podium_pronostic import PodiumPronostic
 
 
 @dataclass
