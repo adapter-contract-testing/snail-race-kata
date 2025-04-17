@@ -1,3 +1,4 @@
 pytest
 pymongo
 requests
+dataclasses
