@@ -39,3 +39,5 @@ pip install -r requirements.txt
 ```shell    
 pytest test/test_requirements_check.py
 ```
+
+6. Follow the instructions in the [kata instructions](../Instructions.md)
