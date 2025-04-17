@@ -12,10 +12,19 @@ class BetRepositoryMongoDb:
         self.database = database
 
     def register(self, bet: Bet) -> None:
-        pass
+        collection: Collection = self._get_collection()
+        collection.insert_one(convert_bet_to_document(bet))
 
     def find_by_date_range(self, from_timestamp: int, to_timestamp: int) -> List["Bet"]:
-        pass
+        query = {
+            "$and": [
+                {"timestamp": {"$gte": from_timestamp}},
+                {"timestamp": {"$lt": to_timestamp}},
+            ]
+        }
+        collection: Collection = self._get_collection()
+        results = collection.find(query)
+        return list(map(convert_document_to_bet, results))
 
     def _get_collection(self):
         return self.database.get_collection("bets")
