@@ -19,27 +19,3 @@ class BetRepositoryMongoDb:
 
     def _get_collection(self):
         return self.database.get_collection("bets")
-
-
-def convert_document_to_bet(document) -> Bet:
-    return Bet(
-        document["gambler"],
-        PodiumPronostic(
-            document["pronostic"]["first"],
-            document["pronostic"]["second"],
-            document["pronostic"]["third"],
-        ),
-        document["timestamp"],
-    )
-
-
-def convert_bet_to_document(bet):
-    return {
-        "gambler": bet.gambler,
-        "pronostic": {
-            "first": bet.pronostic.first,
-            "second": bet.pronostic.second,
-            "third": bet.pronostic.third,
-        },
-        "timestamp": bet.timestamp,
-    }
