@@ -13,6 +13,8 @@ class Bet:
         return self.timestamp > race.timestamp - 2
 
     def bet_is_on(self, podium):
-        return (self.pronostic.first == podium.first.number and
-                self.pronostic.second == podium.second.number and
-                self.pronostic.third == podium.third.number)
+        return (
+            self.pronostic.first == podium.first.number
+            and self.pronostic.second == podium.second.number
+            and self.pronostic.third == podium.third.number
+        )

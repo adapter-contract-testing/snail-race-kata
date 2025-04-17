@@ -7,10 +7,9 @@ from src.domain.race_result_provider_simulator import RaceResultProviderSimulato
 from src.domain.winner import Winner
 
 NINE_EIGHT_SEVEN_PODIUM = Podium(
-    Snail(9, "Turbo"),
-    Snail(8, "Flash"),
-    Snail(7, "Speedy")
+    Snail(9, "Turbo"), Snail(8, "Flash"), Snail(7, "Speedy")
 )
+
 
 class TestBetApplication:
     @pytest.fixture(autouse=True)
@@ -33,11 +32,9 @@ class TestBetApplication:
     def test_no_winners_when_there_is_no_exact_match(self, setup):
         bet_application, race_result_provider = setup
         bet_application.place_bet("me", 1, 9, 8, 7)
-        race_result_provider.simulate_race_result(33, 1, Podium(
-            Snail(6, "Not nine"),
-            Snail(8, "Flash"),
-            Snail(7, "Speedy")
-        ))
+        race_result_provider.simulate_race_result(
+            33, 1, Podium(Snail(6, "Not nine"), Snail(8, "Flash"), Snail(7, "Speedy"))
+        )
         assert bet_application.get_winners_for_last_race() == []
 
     def test_no_winners_when_bet_is_placed_less_than_3_seconds(self, setup):

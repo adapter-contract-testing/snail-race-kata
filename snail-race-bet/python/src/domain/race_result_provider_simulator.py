@@ -9,4 +9,6 @@ class RaceResultProviderSimulator:
         return self.snail_races
 
     def simulate_race_result(self, race_id: int, datetime: int, podium: Podium) -> None:
-        self.snail_races = SnailRaces.with_additional_result(self.snail_races, race_id, datetime, podium)
+        self.snail_races = SnailRaces.with_additional_result(
+            self.snail_races, race_id, datetime, podium
+        )

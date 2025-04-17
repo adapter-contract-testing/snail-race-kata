@@ -1,10 +1,14 @@
-from src.adapters.race_result_provider_http_internal_api import RaceResultProviderHttpInternalApi
+from src.adapters.race_result_provider_http_internal_api import (
+    RaceResultProviderHttpInternalApi,
+)
 from src.domain.race_result_provider import SnailRaces, Snail, Podium
 
 
 class RaceResultProviderHttpAntiCorruptionLayer:
     @staticmethod
-    def map_to_domain(api_result: RaceResultProviderHttpInternalApi.RacesResponse) -> SnailRaces:
+    def map_to_domain(
+        api_result: RaceResultProviderHttpInternalApi.RacesResponse,
+    ) -> SnailRaces:
         result = SnailRaces()
 
         # Tri des courses par timestamp (de la plus récente à la plus ancienne)
@@ -25,7 +29,9 @@ class RaceResultProviderHttpAntiCorruptionLayer:
                 domain_second = Snail(number=second.number, name=second.name)
                 domain_third = Snail(number=third.number, name=third.name)
 
-                podium = Podium(first=domain_first, second=domain_second, third=domain_third)
+                podium = Podium(
+                    first=domain_first, second=domain_second, third=domain_third
+                )
 
                 # Ajouter la course au résultat
                 result.with_additional_result(race.raceId, race.timestamp, podium)

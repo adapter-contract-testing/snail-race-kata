@@ -1,10 +1,13 @@
-from src.adapters.race_result_provider_http_anti_corruption_layer import RaceResultProviderHttpAntiCorruptionLayer
-from src.adapters.race_result_provider_http_internal_api import RaceResultProviderHttpInternalApi
+from src.adapters.race_result_provider_http_anti_corruption_layer import (
+    RaceResultProviderHttpAntiCorruptionLayer,
+)
+from src.adapters.race_result_provider_http_internal_api import (
+    RaceResultProviderHttpInternalApi,
+)
 from src.domain.race_result_provider import SnailRaces, Podium
 
 
 class TestRaceResultProviderHttpAntiCorruptionLayer:
-
     def test_map_to_domain_empty_races(self):
         # Arrange
         api_response = RaceResultProviderHttpInternalApi.RacesResponse(races=[])
@@ -19,14 +22,18 @@ class TestRaceResultProviderHttpAntiCorruptionLayer:
     def test_map_to_domain_one_race(self):
         # Arrange
         api_snails = [
-            RaceResultProviderHttpInternalApi.Snail(duration=10.5, name="Speedy", number=1),
-            RaceResultProviderHttpInternalApi.Snail(duration=12.3, name="Slow", number=2),
-            RaceResultProviderHttpInternalApi.Snail(duration=11.7, name="Average", number=3)
+            RaceResultProviderHttpInternalApi.Snail(
+                duration=10.5, name="Speedy", number=1
+            ),
+            RaceResultProviderHttpInternalApi.Snail(
+                duration=12.3, name="Slow", number=2
+            ),
+            RaceResultProviderHttpInternalApi.Snail(
+                duration=11.7, name="Average", number=3
+            ),
         ]
         api_race = RaceResultProviderHttpInternalApi.Race(
-            raceId=123,
-            timestamp=1600000000000,
-            snails=api_snails
+            raceId=123, timestamp=1600000000000, snails=api_snails
         )
         api_response = RaceResultProviderHttpInternalApi.RacesResponse(races=[api_race])
 
@@ -55,21 +62,35 @@ class TestRaceResultProviderHttpAntiCorruptionLayer:
             raceId=123,
             timestamp=1600000000000,
             snails=[
-                RaceResultProviderHttpInternalApi.Snail(duration=10.5, name="Speedy", number=1),
-                RaceResultProviderHttpInternalApi.Snail(duration=12.3, name="Slow", number=2),
-                RaceResultProviderHttpInternalApi.Snail(duration=11.7, name="Average", number=3)
-            ]
+                RaceResultProviderHttpInternalApi.Snail(
+                    duration=10.5, name="Speedy", number=1
+                ),
+                RaceResultProviderHttpInternalApi.Snail(
+                    duration=12.3, name="Slow", number=2
+                ),
+                RaceResultProviderHttpInternalApi.Snail(
+                    duration=11.7, name="Average", number=3
+                ),
+            ],
         )
         race2 = RaceResultProviderHttpInternalApi.Race(
             raceId=456,
             timestamp=1600000100000,  # Plus récent que race1
             snails=[
-                RaceResultProviderHttpInternalApi.Snail(duration=9.8, name="Flash", number=4),
-                RaceResultProviderHttpInternalApi.Snail(duration=10.2, name="Quick", number=5),
-                RaceResultProviderHttpInternalApi.Snail(duration=10.9, name="Swift", number=6)
-            ]
+                RaceResultProviderHttpInternalApi.Snail(
+                    duration=9.8, name="Flash", number=4
+                ),
+                RaceResultProviderHttpInternalApi.Snail(
+                    duration=10.2, name="Quick", number=5
+                ),
+                RaceResultProviderHttpInternalApi.Snail(
+                    duration=10.9, name="Swift", number=6
+                ),
+            ],
         )
-        api_response = RaceResultProviderHttpInternalApi.RacesResponse(races=[race1, race2])
+        api_response = RaceResultProviderHttpInternalApi.RacesResponse(
+            races=[race1, race2]
+        )
 
         # Act
         result = RaceResultProviderHttpAntiCorruptionLayer.map_to_domain(api_response)
@@ -94,15 +115,23 @@ class TestRaceResultProviderHttpAntiCorruptionLayer:
             raceId=123,
             timestamp=1600000000000,
             snails=[
-                RaceResultProviderHttpInternalApi.Snail(duration=10.5, name="Speedy", number=1),
-                RaceResultProviderHttpInternalApi.Snail(duration=12.3, name="Slow", number=2)
-            ]
+                RaceResultProviderHttpInternalApi.Snail(
+                    duration=10.5, name="Speedy", number=1
+                ),
+                RaceResultProviderHttpInternalApi.Snail(
+                    duration=12.3, name="Slow", number=2
+                ),
+            ],
         )
-        api_response = RaceResultProviderHttpInternalApi.RacesResponse(races=[race_with_two_snails])
+        api_response = RaceResultProviderHttpInternalApi.RacesResponse(
+            races=[race_with_two_snails]
+        )
 
         # Act
         result = RaceResultProviderHttpAntiCorruptionLayer.map_to_domain(api_response)
 
         # Assert
         assert isinstance(result, SnailRaces)
-        assert len(result.races) == 0  # Cette course devrait être ignorée car pas assez d'escargots
+        assert (
+            len(result.races) == 0
+        )  # Cette course devrait être ignorée car pas assez d'escargots

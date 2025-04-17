@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from typing import List
 import json
 
+
 def test_mongo_database_is_reachable():
     mongo_client = MongoClient("mongodb://localhost:27017")
     database_names = mongo_client.list_database_names()
@@ -25,6 +26,7 @@ def test_race_result_server_is_accessible():
     # then check JSON deserialization
     snail_races_results = ServerResult(**json.loads(response.text))
     assert len(snail_races_results.races) > 0
+
 
 @dataclass
 class ServerResult:

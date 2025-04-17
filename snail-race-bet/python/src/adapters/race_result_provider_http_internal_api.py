@@ -13,9 +13,9 @@ class RaceResultProviderHttpInternalApi:
     @dataclass
     class Race:
         raceId: int
-        snails: List['RaceResultProviderHttpInternalApi.Snail']
+        snails: List["RaceResultProviderHttpInternalApi.Snail"]
         timestamp: int
 
     @dataclass
     class RacesResponse:
-        races: List['RaceResultProviderHttpInternalApi.Race']
+        races: List["RaceResultProviderHttpInternalApi.Race"]

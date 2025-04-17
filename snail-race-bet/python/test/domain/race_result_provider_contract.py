@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 
-from src.adapters.race_result_provider_http_internal_api import RaceResultProviderHttpInternalApi
 from src.domain.race_result_provider import SnailRaces
 
 

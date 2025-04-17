@@ -6,7 +6,6 @@ from src.domain.podium_pronostic import PodiumPronostic
 
 
 class BetRepositoryContract(ABC):
-
     @abstractmethod
     def get_repository(self):
         pass
@@ -24,7 +23,9 @@ class BetRepositoryContract(ABC):
         from_timestamp = 12346
         to_timestamp = 12370
 
-        _bet_before_from = self.register_bet_at_timestamp(repository, from_timestamp - 1)
+        _bet_before_from = self.register_bet_at_timestamp(
+            repository, from_timestamp - 1
+        )
         bet_on_from = self.register_bet_at_timestamp(repository, from_timestamp)
         bet_after_from = self.register_bet_at_timestamp(repository, from_timestamp + 1)
         bet_before_to = self.register_bet_at_timestamp(repository, to_timestamp - 1)

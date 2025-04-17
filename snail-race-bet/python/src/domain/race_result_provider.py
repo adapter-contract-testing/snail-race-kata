@@ -29,7 +29,9 @@ class SnailRaces:
     def __init__(self):
         self.races = []
 
-    def with_additional_result(self, race_id: int, datetime: int, podium: Podium) -> 'SnailRaces':
+    def with_additional_result(
+        self, race_id: int, datetime: int, podium: Podium
+    ) -> "SnailRaces":
         self.races.append(SnailRace(race_id, datetime, podium))
         return self
 
@@ -38,9 +40,8 @@ class SnailRaces:
             return None
         return self.races[0]
 
-class RaceResultProvider(ABC):
 
+class RaceResultProvider(ABC):
     @abstractmethod
     def races(self) -> SnailRaces:
         pass
-

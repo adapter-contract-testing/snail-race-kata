@@ -6,7 +6,6 @@ from test.domain.bet_repository_contract import BetRepositoryContract
 
 
 class TestBetRepositoryMongoDb(BetRepositoryContract):
-
     @pytest.fixture(autouse=True)
     def setup_and_teardown(self):
         self.client = MongoClient("mongodb://localhost:27017")

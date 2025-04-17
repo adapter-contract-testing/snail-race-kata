@@ -11,18 +11,23 @@ class BetApplication:
         self.bet_repository = bet_repository
         self.race_result_provider = race_result_provider
 
-    def place_bet(self, gambler: str, timestamp: int, first: int, second: int, third: int) -> None:
-        self.bet_repository.register(Bet(gambler, PodiumPronostic(first, second, third), timestamp))
+    def place_bet(
+        self, gambler: str, timestamp: int, first: int, second: int, third: int
+    ) -> None:
+        self.bet_repository.register(
+            Bet(gambler, PodiumPronostic(first, second, third), timestamp)
+        )
 
     def get_winners_for_last_race(self) -> List[Winner]:
-        bets = self.bet_repository.find_by_date_range(0, float('inf'))
+        bets = self.bet_repository.find_by_date_range(0, float("inf"))
         races = self.race_result_provider.races()
         winning_bets = self.find_exact_match_bets(bets, races.get_last_race())
 
         return [Winner(bet.gambler) for bet in winning_bets]
 
-    def find_exact_match_bets(self, bets: List[Bet], race: SnailRace) -> List['Bet']:
+    def find_exact_match_bets(self, bets: List[Bet], race: SnailRace) -> List["Bet"]:
         return [
-            bet for bet in bets
+            bet
+            for bet in bets
             if bet.is_in_time_for(race) and bet.bet_is_on(race.podium)
         ]

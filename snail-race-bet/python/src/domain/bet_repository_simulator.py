@@ -11,8 +11,9 @@ class BetRepositorySimulator:
     def register(self, bet: Bet) -> None:
         self.in_memory_bets.append(bet)
 
-    def find_by_date_range(self, from_timestamp: int, to_timestamp: int) -> List['Bet']:
+    def find_by_date_range(self, from_timestamp: int, to_timestamp: int) -> List["Bet"]:
         return [
-            deepcopy(bet) for bet in self.in_memory_bets
+            deepcopy(bet)
+            for bet in self.in_memory_bets
             if from_timestamp <= bet.timestamp < to_timestamp
         ]
