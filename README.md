@@ -17,6 +17,6 @@ Available lanquage:
 
 # See also
  - [Organisation link](https://github.com/adapter-contract-testing/)
- - [Slides](https://github.com/adapter-contract-testing/presentation)
+ - [Slides](https://adapter-contract-testing.github.io/presentation/)
  - [Papers](https://github.com/adapter-contract-testing/adapter-contract-testing-papers)
 
