@@ -1,0 +1,35 @@
+import requests
+
+from snail_race_kata.adapters.race_result_provider_http_internal_api import RaceResultProviderHttpInternalApi
+from snail_race_kata.domain.race_result_provider import RaceResultProvider, SnailRaces
+
+
+class RaceResultProviderHttp(RaceResultProvider):
+    def races(self) -> SnailRaces:
+        return SnailRaces()
+
+    def invoke_result_end_point(
+            self,
+    ) -> RaceResultProviderHttpInternalApi.RacesResponse:
+        """Récupère les résultats de courses depuis l'API REST."""
+        response = requests.get("http://localhost:8000/results")
+        data = response.json()
+
+        races = []
+        for race_data in data.get("races", []):
+            snails = [
+                RaceResultProviderHttpInternalApi.Snail(
+                    duration=snail_data["duration"],
+                    name=snail_data["name"],
+                    number=snail_data["number"],
+                )
+                for snail_data in race_data.get("snails", [])
+            ]
+            race = RaceResultProviderHttpInternalApi.Race(
+                raceId=race_data["raceId"],
+                snails=snails,
+                timestamp=race_data["timestamp"],
+            )
+            races.append(race)
+
+        return RaceResultProviderHttpInternalApi.RacesResponse(races=races)
