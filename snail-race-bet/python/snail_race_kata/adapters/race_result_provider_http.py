@@ -1,12 +1,15 @@
 import requests
 
+from snail_race_kata.adapters.race_result_provider_http_anti_corruption_layer import \
+    RaceResultProviderHttpAntiCorruptionLayer
 from snail_race_kata.adapters.race_result_provider_http_internal_api import RaceResultProviderHttpInternalApi
 from snail_race_kata.domain.race_result_provider import RaceResultProvider, SnailRaces
 
 
 class RaceResultProviderHttp(RaceResultProvider):
     def races(self) -> SnailRaces:
-        return SnailRaces()
+        api_result = self.invoke_result_end_point()
+        return RaceResultProviderHttpAntiCorruptionLayer.map_to_domain(api_result)
 
     def invoke_result_end_point(
             self,
