@@ -40,4 +40,7 @@ pip install -r requirements.txt
 pytest test/test_requirements_check.py
 ```
 
-6. Follow the instructions in the [kata instructions](../Instructions.md)
+If all tests pass, you should see the following output:
+![All tests must pass](check-requirements.png)
+
+6. Then follow the instructions in the [kata instructions](../Instructions.md)
