@@ -29,14 +29,14 @@ class BetApplicationTest {
         @Test
         void exact_match() {
             betApplication.placeBet("me", betTime, 9, 8, 7);
-            raceResultProvider.simulateRaceResult(33, betTime + THREE_SECONDS, NINE_EIGHT_SEVEN_PODIUM);
+            raceResultProvider.registerRaceResult(betTime + THREE_SECONDS, NINE_EIGHT_SEVEN_PODIUM);
             assertThat(betApplication.getWinnersForLastRace()).containsExactly(new Winner("me"));
         }
 
         @Test
         void third_place_differs() {
             betApplication.placeBet("me", betTime, 9, 8, 7);
-            raceResultProvider.simulateRaceResult(33, betTime + THREE_SECONDS, NINE_HEIGHT_FOUR_PODIUM);
+            raceResultProvider.registerRaceResult(betTime + THREE_SECONDS, NINE_HEIGHT_FOUR_PODIUM);
             assertThat(betApplication.getWinnersForLastRace()).isEmpty();
         }
     }
@@ -44,20 +44,19 @@ class BetApplicationTest {
     @Test
     void no_winner_when_bet_is_placed_less_than_3_seconds() {
         betApplication.placeBet("me", betTime, 9, 8, 7);
-        raceResultProvider.simulateRaceResult(2, betTime + TWO_SECONDS, NINE_EIGHT_SEVEN_PODIUM);
+        raceResultProvider.registerRaceResult(betTime + TWO_SECONDS, NINE_EIGHT_SEVEN_PODIUM);
         assertThat(betApplication.getWinnersForLastRace()).isEmpty();
     }
 
     @Test
     void no_winner_when_the_bet_is_older_than_the_previous_race() {
         // Place a bet through betApplication
-        int betDate = 12546;
-        betApplication.placeBet("mathieu", betDate, 9, 8, 7);
+        betApplication.placeBet("mathieu", betTime, 9, 8, 7);
 
         // Configure a race that is older than the bet
-        raceResultProvider.simulateRaceResult( 12345, betDate + FIVE_SECONDS, FIVE_SIX_SEVEN_PODIUM);
+        raceResultProvider.registerRaceResult(betTime + FIVE_SECONDS, FIVE_SIX_SEVEN_PODIUM);
         // Configure another race that is newer than the previous race and has a podium that match the pronostic
-        raceResultProvider.simulateRaceResult( 12346, betDate + TEN_SECONDS, NINE_EIGHT_SEVEN_PODIUM);
+        raceResultProvider.registerRaceResult(betTime + TEN_SECONDS, NINE_EIGHT_SEVEN_PODIUM);
 
         // Verify there is no winner
         assertThat(betApplication.getWinnersForLastRace()).isEmpty();

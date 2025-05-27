@@ -13,12 +13,12 @@ class RaceResultProviderSimulatorTest extends RaceResultProviderContract {
                 new RaceResultProvider.Snail(1, "Turbo"),
                 new RaceResultProvider.Snail(2, "Flash"),
                 new RaceResultProvider.Snail(3, "Speedy"));
-        resultProviderSimulator.simulateRaceResult(1, 1, podium);
+        resultProviderSimulator.registerRaceResult(1, podium);
         RaceResultProvider.Podium podium2 = new RaceResultProvider.Podium(
                 new RaceResultProvider.Snail(2, "Flash"),
                 new RaceResultProvider.Snail(1, "Turbo"),
                 new RaceResultProvider.Snail(3, "Speedy"));
-        resultProviderSimulator.simulateRaceResult(2, 10, podium2);
+        resultProviderSimulator.registerRaceResult(10, podium2);
         raceResultProviderSimulator = resultProviderSimulator;
 
     }

@@ -5,13 +5,10 @@ import java.util.ArrayList;
 
 public class RaceResultProviderSimulator implements RaceResultProvider {
     private SnailRaces snailRaces;
+    private int nextId = 7894351;
 
     public RaceResultProviderSimulator() {
         this.snailRaces = new SnailRaces(new ArrayList<>());
-    }
-
-    public RaceResultProviderSimulator(SnailRaces snailRaces) {
-        this.snailRaces = snailRaces;
     }
 
     @Override
@@ -19,8 +16,8 @@ public class RaceResultProviderSimulator implements RaceResultProvider {
         return snailRaces;
     }
 
-    public void simulateRaceResult(int raceId, long datetime, Podium podium) {
-        this.snailRaces = SnailRaces.withAdditionalResult(this.snailRaces, raceId, datetime, podium);
+    public void registerRaceResult(long datetime, Podium podium) {
+        this.snailRaces = SnailRaces.withAdditionalResult(this.snailRaces, nextId++, datetime, podium);
     }
 }
 
