@@ -12,6 +12,11 @@ class BetApplicationTest {
             new RaceResultProvider.Snail(8, "Flash"),
             new RaceResultProvider.Snail(7, "Speedy")
     );
+    public static final RaceResultProvider.Podium FIVE_SIX_SEVEN_PODIUM = new RaceResultProvider.Podium(
+            new RaceResultProvider.Snail(5, "Gonzales"),
+            new RaceResultProvider.Snail(6, "Gordon"),
+            new RaceResultProvider.Snail(7, "Speedy")
+    );
     BetApplication betApplication;
     RaceResultProviderSimulator raceResultProvider = new RaceResultProviderSimulator();
 
@@ -52,6 +57,21 @@ class BetApplicationTest {
     void no_winner_when_bet_is_placed_less_than_3_seconds() {
         betApplication.placeBet("me", 1, 9, 8, 7);
         raceResultProvider.simulateRaceResult(2, 3, NINE_EIGHT_SEVEN_PODIUM);
+        assertThat(betApplication.getWinnersForLastRace()).isEmpty();
+    }
+
+    @Test
+    void no_winner_when_the_bet_is_older_than_the_previous_race() {
+        // Place a bet through betApplication
+        int betDate = 12546;
+        betApplication.placeBet("mathieu", betDate, 9, 8, 7);
+
+        // Configure a race that is older than the bet
+        raceResultProvider.simulateRaceResult( betDate + 5000 , 3, FIVE_SIX_SEVEN_PODIUM);
+        // Configure another race that is newer than the previous race and has a podium that match the pronostic
+        raceResultProvider.simulateRaceResult( betDate + 10000 , 3, NINE_EIGHT_SEVEN_PODIUM);
+
+        // Verify there is no winner
         assertThat(betApplication.getWinnersForLastRace()).isEmpty();
     }
 
