@@ -7,7 +7,7 @@ public record Bet(
 ){
 
     public boolean isInTimeFor(RaceResultProvider.SnailRace race) {
-        return timestamp > race.timestamp() - 2;
+        return timestamp < race.timestamp() - 2;
     }
 
     boolean betIsOn(RaceResultProvider.Podium podium) {

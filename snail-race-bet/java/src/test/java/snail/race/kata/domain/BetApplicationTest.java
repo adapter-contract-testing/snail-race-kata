@@ -7,16 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BetApplicationTest {
 
-    public static final RaceResultProvider.Podium NINE_EIGHT_SEVEN_PODIUM = new RaceResultProvider.Podium(
-            new RaceResultProvider.Snail(9, "Turbo"),
-            new RaceResultProvider.Snail(8, "Flash"),
-            new RaceResultProvider.Snail(7, "Speedy")
-    );
-    public static final RaceResultProvider.Podium FIVE_SIX_SEVEN_PODIUM = new RaceResultProvider.Podium(
-            new RaceResultProvider.Snail(5, "Gonzales"),
-            new RaceResultProvider.Snail(6, "Gordon"),
-            new RaceResultProvider.Snail(7, "Speedy")
-    );
+
+
     BetApplication betApplication;
     RaceResultProviderSimulator raceResultProvider = new RaceResultProviderSimulator();
 
@@ -36,14 +28,14 @@ class BetApplicationTest {
         @Test
         void exact_match() {
             betApplication.placeBet("me", 1, 9, 8, 7);
-            raceResultProvider.simulateRaceResult(33, 1, NINE_EIGHT_SEVEN_PODIUM);
+            raceResultProvider.simulateRaceResult(33, 4, NINE_EIGHT_SEVEN_PODIUM);
             assertThat(betApplication.getWinnersForLastRace()).containsExactly(new Winner("me"));
         }
 
         @Test
         void third_place_differs() {
             betApplication.placeBet("me", 1, 9, 8, 7);
-            raceResultProvider.simulateRaceResult(33, 1, new RaceResultProvider.Podium(
+            raceResultProvider.simulateRaceResult(33, 5, new RaceResultProvider.Podium(
                     new RaceResultProvider.Snail(9, "Not nine"),
                     new RaceResultProvider.Snail(8, "Flash"),
                     new RaceResultProvider.Snail(4, "Speedy")
@@ -67,9 +59,9 @@ class BetApplicationTest {
         betApplication.placeBet("mathieu", betDate, 9, 8, 7);
 
         // Configure a race that is older than the bet
-        raceResultProvider.simulateRaceResult( betDate + 5000 , 3, FIVE_SIX_SEVEN_PODIUM);
+        raceResultProvider.simulateRaceResult( 12345, betDate + FIVE_SECONDS, FIVE_SIX_SEVEN_PODIUM);
         // Configure another race that is newer than the previous race and has a podium that match the pronostic
-        raceResultProvider.simulateRaceResult( betDate + 10000 , 3, NINE_EIGHT_SEVEN_PODIUM);
+        raceResultProvider.simulateRaceResult( 12346, betDate + TEN_SECONDS, NINE_EIGHT_SEVEN_PODIUM);
 
         // Verify there is no winner
         assertThat(betApplication.getWinnersForLastRace()).isEmpty();
@@ -79,4 +71,18 @@ class BetApplicationTest {
     void no_winners_when_there_is_the_slightest_difference() {
 //        betApplication.placeBet("me", 1, 9
     }
+
+    public static final RaceResultProvider.Podium NINE_EIGHT_SEVEN_PODIUM = new RaceResultProvider.Podium(
+            new RaceResultProvider.Snail(9, "Turbo"),
+            new RaceResultProvider.Snail(8, "Flash"),
+            new RaceResultProvider.Snail(7, "Speedy")
+    );
+    public static final RaceResultProvider.Podium FIVE_SIX_SEVEN_PODIUM = new RaceResultProvider.Podium(
+            new RaceResultProvider.Snail(5, "Gonzales"),
+            new RaceResultProvider.Snail(6, "Gordon"),
+            new RaceResultProvider.Snail(7, "Speedy")
+    );
+
+    public final int FIVE_SECONDS = 5;
+    public final int TEN_SECONDS = 10;
 }
