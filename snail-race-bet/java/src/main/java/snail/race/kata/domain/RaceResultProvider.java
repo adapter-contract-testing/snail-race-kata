@@ -32,7 +32,7 @@ public interface RaceResultProvider {
             // TODO make this actually get the last
             if (races.isEmpty())
                 return null;
-            return races.get(0);
+            return races.stream().min((a, b) -> Math.toIntExact(a.timestamp - b.timestamp)).get();
         }
     }
 }

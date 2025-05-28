@@ -62,6 +62,24 @@ class BetApplicationTest {
         assertThat(betApplication.getWinnersForLastRace()).isEmpty();
     }
 
+    @Test
+    void races_can_be_registered_in_any_order_not_necessary_the_chronological_one() {
+        // Place a bet through betApplication
+        var oldBetTime = 567890;
+        var oldRaceTime = oldBetTime + TEN_SECONDS;
+        var winningBetTime = oldRaceTime + TEN_SECONDS;
+        var lastRaceTime = winningBetTime + TEN_SECONDS;
+        betApplication.placeBet("mathieu", oldBetTime, 5, 6, 7);
+        betApplication.placeBet("johan", winningBetTime, 9, 8, 7);
+
+        // Register races in a non-chronological order
+        raceResultProvider.registerRaceResult(lastRaceTime, NINE_EIGHT_SEVEN_PODIUM);
+        raceResultProvider.registerRaceResult(oldRaceTime, FIVE_SIX_SEVEN_PODIUM);
+
+        // Verify johan is a winner
+        assertThat(betApplication.getWinnersForLastRace()).containsExactly(new Winner("johan"));
+    }
+
     public static final RaceResultProvider.Podium NINE_EIGHT_SEVEN_PODIUM = new RaceResultProvider.Podium(
             new RaceResultProvider.Snail(9, "Turbo"),
             new RaceResultProvider.Snail(8, "Flash"),
