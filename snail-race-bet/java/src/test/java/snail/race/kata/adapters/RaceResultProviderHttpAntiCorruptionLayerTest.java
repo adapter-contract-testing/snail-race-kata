@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 import static snail.race.kata.adapters.RaceResultProviderHttpAntiCorruptionLayerTest.RaceBuilder.aRace;
 import static snail.race.kata.adapters.RaceResultProviderHttpAntiCorruptionLayerTest.SnailBuilder.aSnail;
 
@@ -37,6 +38,27 @@ class RaceResultProviderHttpAntiCorruptionLayerTest {
                 createPodium(first, second, third));
         var expectedSnailRace = new SnailRaces(List.of(expectedRace));
         assertThat(snailRaces).isEqualTo(expectedSnailRace);
+    }
+
+    @Test
+    void map_all_api_race_to_a_snail_race_with_the_right_timestamp_and_id() {
+        var races = List.of(
+                aRace().build(),
+                aRace().build(),
+                aRace().build(),
+                aRace().build());
+        var raceData = new Races(races);
+
+        var snailRaces = RaceResultProviderHttpAntiCorruptionLayer.mapToDomain(raceData);
+
+        assertThat(snailRaces.races())
+                .extracting(SnailRace::raceId, SnailRace::timestamp)
+                .containsExactlyElementsOf(
+                        races.stream()
+                                .map(race -> tuple(race.raceId(), race.timestamp()))
+                                .toList()
+                );
+
     }
 
     private static Podium createPodium(RaceResultProviderHttprRecords.Snail first, RaceResultProviderHttprRecords.Snail second, RaceResultProviderHttprRecords.Snail third) {
@@ -77,7 +99,7 @@ class RaceResultProviderHttpAntiCorruptionLayerTest {
 
     public static class SnailBuilder {
         private final int number = Math.toIntExact(Math.round(Math.random() * 10000));
-        double duration = Math.random()*1000;
+        double duration = Math.random() * 1000;
 
         public static SnailBuilder aSnail() {
             return new SnailBuilder();
