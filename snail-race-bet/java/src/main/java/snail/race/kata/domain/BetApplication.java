@@ -43,7 +43,7 @@ public class BetApplication {
 
         var lastRace = sortedRaces.get(0);
         int lastRaceTimestamp = Math.toIntExact(lastRace.timestamp());
-        var bets = betRepository.findByDateRange(previousRaceTimestamp, lastRaceTimestamp);
+        var bets = betRepository.findByDateRange(previousRaceTimestamp + 1, lastRaceTimestamp);
 
         var winningBets = findExactMatchBets(bets, lastRace);
 

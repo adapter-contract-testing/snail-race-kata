@@ -41,25 +41,85 @@ class BetApplicationTest {
         }
     }
 
-    @Test
-    void no_winner_when_bet_is_placed_less_than_3_seconds() {
-        betApplication.placeBet("me", betTime, 9, 8, 7);
-        raceResultProvider.registerRaceResult(betTime + TWO_SECONDS, NINE_EIGHT_SEVEN_PODIUM);
-        assertThat(betApplication.getWinnersForLastRace()).isEmpty();
+    @Nested
+    class WinOnlyIfPlacedAtLeast3SecondsBeforeRace {
+        @Test
+        void before_and_at_the_three_seconds_are_winner() {
+            // Given a race at a specific time
+            var lastRaceDate = 1234567890;
+            raceResultProvider.registerRaceResult(lastRaceDate, FIVE_SIX_SEVEN_PODIUM);
+
+            // When bets are placed before and at the three seconds limit
+            betApplication.placeBet("win before boundary", lastRaceDate - THREE_SECONDS, 5, 6, 7);
+            betApplication.placeBet("win on boundary", lastRaceDate - THREE_SECONDS, 5, 6, 7);
+
+            // Then both bets are winners
+            var winners = betApplication.getWinnersForLastRace();
+            assertThat(winners)
+                    .extracting(Winner::gambler)
+                    .containsExactlyInAnyOrder("win before boundary", "win on boundary");
+        }
+
+        @Test
+        void after_the_three_seconds_are_looser() {
+            // Given a race at a specific time
+            var lastRaceDate = 1234567890;
+            raceResultProvider.registerRaceResult(lastRaceDate, FIVE_SIX_SEVEN_PODIUM);
+
+            // When bets are placed before and at the three seconds limit
+            betApplication.placeBet("lose just after the limit", lastRaceDate - TWO_SECONDS, 5, 6, 7);
+            betApplication.placeBet("lose just before the race date", lastRaceDate - ONE_SECONDS, 5, 6, 7);
+            betApplication.placeBet("lose on the race date", lastRaceDate, 5, 6, 7);
+            betApplication.placeBet("lose after the race date", lastRaceDate + ONE_SECONDS, 5, 6, 7);
+
+            // Then both bets are winners
+            var winners = betApplication.getWinnersForLastRace();
+            assertThat(winners).isEmpty();
+        }
     }
 
-    @Test
-    void no_winner_when_the_bet_is_older_than_the_previous_race() {
-        // Place a bet through betApplication
-        betApplication.placeBet("mathieu", betTime, 9, 8, 7);
 
-        // Configure a race that is older than the bet
-        raceResultProvider.registerRaceResult(betTime + FIVE_SECONDS, FIVE_SIX_SEVEN_PODIUM);
-        // Configure another race that is newer than the previous race and has a podium that match the pronostic
-        raceResultProvider.registerRaceResult(betTime + TEN_SECONDS, NINE_EIGHT_SEVEN_PODIUM);
+    @Nested
+    class BetIsValidOnlyForTheLastRace {
+        @Test
+        void all_bets_that_match_the_podium_after_the_previous_date_are_winner(){
 
-        // Verify there is no winner
-        assertThat(betApplication.getWinnersForLastRace()).isEmpty();
+            // Given two races with the same podium offset by TEN_SECONDS
+            var previousRace = 1234567890;
+            var lastRaceDate = previousRace + TEN_SECONDS;
+            raceResultProvider.registerRaceResult(previousRace, FIVE_SIX_SEVEN_PODIUM);
+            raceResultProvider.registerRaceResult(lastRaceDate, FIVE_SIX_SEVEN_PODIUM);
+
+            // When placing bets at different times
+            betApplication.placeBet("win just after", previousRace + ONE_SECONDS, 5, 6, 7);
+            betApplication.placeBet("win between", lastRaceDate - FIVE_SECONDS, 5, 6, 7);
+            betApplication.placeBet("win just in time", lastRaceDate - THREE_SECONDS, 5, 6, 7);
+
+            // Then only the bets placed between the previous and the last are winners
+            var winners = betApplication.getWinnersForLastRace();
+            assertThat(winners)
+                    .extracting(Winner::gambler)
+                    .containsExactlyInAnyOrder("win just after", "win between", "win just in time");
+        }
+
+        @Test
+        void all_bets_that_match_the_podium_before_and_at_the_previous_date_are_not_winner(){
+
+            // Given two races with the same podium offset by TEN_SECONDS
+            var previousRace = 1234567890;
+            var lastRaceDate = previousRace + TEN_SECONDS;
+            raceResultProvider.registerRaceResult(previousRace, FIVE_SIX_SEVEN_PODIUM);
+            raceResultProvider.registerRaceResult(lastRaceDate, FIVE_SIX_SEVEN_PODIUM);
+
+            // When placing bets at different times
+            betApplication.placeBet("out dated before the previous race", previousRace - ONE_SECONDS, 5, 6, 7);
+            betApplication.placeBet("out dated on the previous race", previousRace, 5, 6, 7);
+
+            // Then only the bets placed between the previous and the last are winners
+            var winners = betApplication.getWinnersForLastRace();
+            assertThat(winners).isEmpty();
+        }
+
     }
 
     @Test
@@ -80,6 +140,7 @@ class BetApplicationTest {
         assertThat(betApplication.getWinnersForLastRace()).containsExactly(new Winner("johan"));
     }
 
+
     public static final RaceResultProvider.Podium NINE_EIGHT_SEVEN_PODIUM = new RaceResultProvider.Podium(
             new RaceResultProvider.Snail(9, "Turbo"),
             new RaceResultProvider.Snail(8, "Flash"),
@@ -97,6 +158,7 @@ class BetApplicationTest {
             new RaceResultProvider.Snail(7, "Speedy")
     );
 
+    public final int ONE_SECONDS = 1;
     public final int TWO_SECONDS = 2;
     public final int THREE_SECONDS = 3;
     public final int FIVE_SECONDS = 5;
