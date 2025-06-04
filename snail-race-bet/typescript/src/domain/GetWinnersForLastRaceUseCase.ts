@@ -22,16 +22,17 @@ export class GetWinnersForLastRaceUseCase {
         }
         let validBetDateFrom = 0
         if (results.races.length > 1){
-            validBetDateFrom = results.races[1].timestamp;
+            validBetDateFrom = results.races[1].timestamp + 1;
         }
         const lastRace = results.races[0];
 
         const bets = await this.betRepository.findByDateRange(
             validBetDateFrom,
-            lastRace.timestamp - threeSeconds)
+            lastRace.timestamp)
 
         return new Winners(bets
             .filter(bet => matchExactly(bet.pronostic, lastRace.podium))
+            .filter(bet => bet.timestamp <= lastRace.timestamp - threeSeconds)
             .map(bet => bet.gambler))
     }
 }

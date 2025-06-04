@@ -13,6 +13,14 @@ export class Podium {
         public readonly third: Snail
     ) {
     }
+
+    static NineHeightSeven() {
+        return new Podium(new Snail(9, 'Nine'), new Snail(8, 'Height'), new Snail(7, 'Seven'));
+    }
+
+    static FiveSixSeven() {
+        return new Podium(new Snail(5, 'Speedy'), new Snail(6, 'Naruto'), new Snail(7, 'Michka'));
+    }
 }
 
 export class SnailRace {
