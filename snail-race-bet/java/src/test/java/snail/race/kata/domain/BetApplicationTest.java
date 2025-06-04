@@ -56,7 +56,7 @@ class BetApplicationTest {
             raceResultProvider.registerRaceResult(lastRaceDate, FIVE_SIX_SEVEN_PODIUM);
 
             // When bets are placed before and at the three seconds limit
-            betApplication.placeBet("win before boundary", lastRaceDate - THREE_SECONDS, 5, 6, 7);
+            betApplication.placeBet("win before boundary", lastRaceDate - FOUR_SECONDS, 5, 6, 7);
             betApplication.placeBet("win on boundary", lastRaceDate - THREE_SECONDS, 5, 6, 7);
 
             // Then both bets are winners
@@ -72,7 +72,7 @@ class BetApplicationTest {
             var lastRaceDate = 1234567890;
             raceResultProvider.registerRaceResult(lastRaceDate, FIVE_SIX_SEVEN_PODIUM);
 
-            // When bets are placed before and at the three seconds limit
+            // When bets are placed just after the 3 seconds limit
             betApplication.placeBet("lose just after the limit", lastRaceDate - TWO_SECONDS, 5, 6, 7);
             betApplication.placeBet("lose just before the race date", lastRaceDate - ONE_SECONDS, 5, 6, 7);
             betApplication.placeBet("lose on the race date", lastRaceDate, 5, 6, 7);
@@ -164,6 +164,7 @@ class BetApplicationTest {
     public final int ONE_SECONDS = 1;
     public final int TWO_SECONDS = 2;
     public final int THREE_SECONDS = 3;
+    public final int FOUR_SECONDS = 4;
     public final int FIVE_SECONDS = 5;
     public final int TEN_SECONDS = 10;
     public final int betTime = 123456;
