@@ -14,6 +14,7 @@ For example : open the ./snail-race-bet/typescript/ for typescript
 Available lanquage:
  - [typescript](./snail-race-bet/typescript/README.md)
  - [java](./snail-race-bet/java/README.md)
+ - [python](./snail-race-bet/python/README.md)
 
 # See also
  - [Organisation link](https://github.com/adapter-contract-testing/)
